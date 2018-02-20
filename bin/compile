@@ -53,8 +53,8 @@ else
   echo "PNGQUANT_DOWNLOAD_URL = " $PNGQUANT_DOWNLOAD_URL | indent
 
   cd $BUILD_DIR
-  curl -L $PNGQUANT_DOWNLOAD_URL | tar -xzv | indent
-  cd pngquant-2.7.2
+  curl -L --silent $PNGQUANT_DOWNLOAD_URL | tar -xzv | indent
+  cd pngquant-2.11.7
   ./configure | indent
   make | indent
   chmod +x pngquant
