@@ -1,27 +1,4 @@
 #!/bin/sh
-
-#indent() {
-#  sed -u 's/^/       /'
-#}
-
-#echo "-----> Installing pngquant"
-#BUILD_DIR=$1
-#VENDOR_DIR="vendor"
-#PNGQUANT_DOWNLOAD_URL="https://github.com/pornel/pngquant/archive/2.11.7.tar.gz"
-
-#echo "PNGQUANT_DOWNLOAD_URL = " $PNGQUANT_DOWNLOAD_URL | indent
-
-#cd $BUILD_DIR
-#mkdir -p $VENDOR_DIR/pngquant/bin
-#cd $VENDOR_DIR
-#curl -L --silent -o pngquant/bin/pngquant $PNGQUANT_DOWNLOAD_URL
-#chmod +x pngquant/bin/pngquant
-
-#echo "exporting PATH" | indent
-#PROFILE_PATH="$BUILD_DIR/.profile.d/pngquant.sh"
-#mkdir -p $(dirname $PROFILE_PATH)
-#echo 'export PATH="$PATH:vendor/pngquant/bin"' >> $PROFILE_PATH
-
 set -e
 
 indent() {
@@ -56,7 +33,9 @@ else
   #curl -L --silent $PNGQUANT_DOWNLOAD_URL | tar -xzv | indent
   git clone --recursive https://github.com/kornelski/pngquant.git
   cd pngquant
-  ./configure | indent
+  
+  # compile with libpng 1.5.17 from heroku-buildpack-graphicsmagick
+  ./configure  --with-libpng=$BUILD_DIR/$VENDOR_DIR/libpng | indent
   make | indent
   chmod +x pngquant
 
